@@ -32,3 +32,8 @@ class Posts(BaseEntity):
         )
 
         return self._format_output(request.json())
+    
+
+class PostInterface:
+    selected_message = '\nImages selected'
+    input_message = 'Search for tags: '
