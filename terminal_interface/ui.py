@@ -7,9 +7,9 @@ class TerminalUI:
     )
 
     def __init__(self):
-        self.exit_ui = False
         self.topic = 0
 
+    #flows
     def init(self,):
         topic = self._get_topic()
 
@@ -23,14 +23,13 @@ class TerminalUI:
     def init_topic_flow(self):
         _, topic_actions, topic_interface = self.selected_topic
 
-        print(topic_interface.selected_message)
-        tags = input(topic_interface.input_message)
-        actions = topic_actions(tags)
-        print(actions.get())
+        print(topic_interface.selection_message)
+        search = input(topic_interface.input_message).strip()
+        actions = topic_actions(search)
+        json_response = actions.get()
+        print(topic_interface.format_output(json_response))
         
-        self.exit_ui = True
-        
-
+    # validations
     def _is_valid_topic(self, topic):
         try:
             topic = int(topic)
@@ -61,7 +60,7 @@ class TerminalUI:
         topics = ''.join(
             [f'\n{index} - {interface.domain_name}' for index, _, interface in self.TOPICS]
         )
-        return input(f'Select a topic:\n0 - Exit{topics}\n>')
+        return input(f'Select a topic:\n0 - Exit{topics}\n\n>')
 
     def _set_topic(self, topic):
         self.topic = int(topic)
