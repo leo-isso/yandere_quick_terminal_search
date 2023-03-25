@@ -1,4 +1,4 @@
-from domain.base import BaseDomain
+from domains.base import BaseDomain
 from utils import split_tags
 
 class Posts(BaseDomain):
