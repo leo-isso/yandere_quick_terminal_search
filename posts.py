@@ -8,18 +8,6 @@ class Posts(BaseEntity):
         self.tags = tags
         self.page = 0
 
-    def _format_output(self, json_response):
-        output = ''
-
-        for item in json_response:
-            id = item['id']
-            file_url = item['file_url']
-            tags = item['tags']
-
-            output = f'{output}\nID: {id}\nFile URL: {file_url}\nTags: {tags}\n'
-
-        return output
-
     def get(self):
         params = dict(
             tags=split_tags(self.tags),
@@ -31,9 +19,21 @@ class Posts(BaseEntity):
             params=params,
         )
 
-        return self._format_output(request.json())
+        return request.json()
     
 
 class PostInterface:
     selected_message = '\nImages selected'
     input_message = 'Search for tags: '
+
+    def _format_output(self, json_response):
+        output = ''
+
+        for item in json_response:
+            id = item['id']
+            file_url = item['file_url']
+            tags = item['tags']
+
+            output = f'{output}\nID: {id}\nFile URL: {file_url}\nTags: {tags}\n'
+
+        return output
