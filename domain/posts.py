@@ -1,7 +1,7 @@
-from base import BaseEntity
+from domain.base import BaseDomain
 from utils import split_tags
 
-class Posts(BaseEntity):
+class Posts(BaseDomain):
     def __init__(self, tags):
         super().__init__()
         self.ENTITY_URL = f'{self.base_url}post.json'

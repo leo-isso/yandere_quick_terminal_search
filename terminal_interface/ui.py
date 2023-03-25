@@ -1,4 +1,4 @@
-from posts import Posts, PostInterface
+from domain.posts import Posts, PostInterface
 
 class TerminalUI:
     TOPICS = (
