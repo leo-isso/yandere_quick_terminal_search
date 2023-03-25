@@ -24,10 +24,10 @@ class Posts(BaseDomain):
 
 class PostInterface:
     domain_name = 'Images'
-    selected_message = '\nImages selected'
+    selection_message = '\nImages selected'
     input_message = 'Search for tags: '
 
-    def _format_output(self, json_response):
+    def format_output(self, json_response):
         output = ''
 
         for item in json_response:
