@@ -23,6 +23,7 @@ class Posts(BaseDomain):
     
 
 class PostInterface:
+    domain_name = 'Images'
     selected_message = '\nImages selected'
     input_message = 'Search for tags: '
 
