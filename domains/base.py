@@ -8,11 +8,11 @@ class BaseDomain:
     def ENTITY_URL(self):
         return NotImplementedError()
     
-    def handle_params():
+    def _handle_params(self):
         return NotImplementedError()
 
     def get(self, filter, page):
-        params = self.handle_params(filter, page)
+        params = self._handle_params(filter, page)
 
         request = self.requests.get(
             url=self.ENTITY_URL,
