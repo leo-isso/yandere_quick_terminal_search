@@ -1,3 +1,6 @@
+import os
+from time import sleep
+
 from domains.posts import Posts, PostInterface
 
 class TerminalUI:
@@ -9,21 +12,25 @@ class TerminalUI:
 
     # flows
     def init(self):
+        self._clear_console()
         topic = self._get_topic()
         
         # handle invalid input
         if not self._is_valid_input(topic, self.TOPICS):
             self._send_invalid_message()
+            sleep(2)
             return self.init()
         
         self._set_topic(topic)   
         # handle exit case
         if self.topic == 0:
+            self._clear_console()
             return
                  
         self.init_tags_flow()
 
     def init_tags_flow(self):
+        self._clear_console()
         tags = self._get_tags()
         self._set_tags(tags)
         self.init_response_flow()
@@ -47,6 +54,7 @@ class TerminalUI:
         self._set_final_action(final_action)   
         # handle exit case
         if self.final_action == 0:
+            self._clear_console()
             return
         
         _, action_method, __ = self.selected_final_action
@@ -69,7 +77,10 @@ class TerminalUI:
         
     # messages
     def _send_invalid_message(self):
-        print('\nThe inserted value is invalid, please try again...\n')
+        print('The inserted value is invalid, please try again...\n')
+
+    def _clear_console(self):
+        os.system('cls' if os.name == 'nt' else 'clear')
 
 
     # props, sets, gets
