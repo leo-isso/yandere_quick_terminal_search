@@ -1,7 +1,8 @@
 import os
 from time import sleep
 
-from domains.posts import Posts, PostInterface
+from domains.posts import Posts
+from terminal_interface.posts import PostInterface
 
 class TerminalUI:
     def __init__(self):
