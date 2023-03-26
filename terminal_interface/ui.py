@@ -37,15 +37,15 @@ class TerminalUI:
     def init_filter_flow(self):
         self._clear_console()
         self.reset_pages()
-        filter = split_filters(self._get_filters())
-        self._set_filters(filter)
+        filters = split_filters(self._get_filters())
+        self._set_filters(filters)
         self.init_response_flow()
 
     def init_response_flow(self):
         _, topic_actions, topic_interface = self.selected_topic
         
         actions = topic_actions()
-        json_response = actions.get(filter=self.filters, page=self.topic_page)
+        json_response = actions.get(filters=self.filters, page=self.topic_page)
         print(topic_interface.format_output(json_response))
         self.init_after_response_flow()
 
