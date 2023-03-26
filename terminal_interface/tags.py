@@ -10,10 +10,10 @@ class TagsInterface:
         output = ''
 
         for item in json_response:
-            id = item['id']
+            id_ = item['id']
             name = item['name']
             count = item['count']
 
-            output = f'{output}\nID: {id}\nTag name: {name}\nResults: {count}\n'
+            output = f'{output}\nID: {id_}\nTag name: {name}\nResults: {count}\n'
 
         return output
