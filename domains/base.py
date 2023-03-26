@@ -6,7 +6,7 @@ class BaseDomain:
     requests = requests
 
     @property
-    def ENTITY_URL(self):
+    def entity_url(self):
         return NotImplementedError()
 
     def _handle_params(self, filters, page):
@@ -16,7 +16,7 @@ class BaseDomain:
         params = self._handle_params(filters, page)
 
         request = self.requests.get(
-            url=self.ENTITY_URL,
+            url=self.entity_url,
             params=params,
             timeout=30
         )
