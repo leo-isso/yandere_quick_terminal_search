@@ -2,7 +2,9 @@ import os
 from time import sleep
 
 from domains.posts import Posts
+from domains.tags import Tags
 from terminal_interface.posts import PostInterface
+from terminal_interface.tags import TagsInterface
 from utils import split_filters
 
 class TerminalUI:
@@ -15,6 +17,7 @@ class TerminalUI:
     # flows
     def init(self):
         self._clear_console()
+        self.reset_pages()
         topic = self._get_topic()
         
         # handle invalid input
@@ -33,6 +36,7 @@ class TerminalUI:
 
     def init_filter_flow(self):
         self._clear_console()
+        self.reset_pages()
         filter = split_filters(self._get_filters())
         self._set_filters(filter)
         self.init_response_flow()
@@ -61,6 +65,10 @@ class TerminalUI:
         
         _, action_method, __ = self.selected_final_action
         action_method()
+
+    def init_get_more_flow(self):
+        self.increment_pages()
+        self.init_response_flow()
         
     # validations
     def _is_valid_input(self, topic, property):
@@ -88,13 +96,13 @@ class TerminalUI:
     # props, sets, gets
     TOPICS = (
         (1, Posts, PostInterface()),
-        # (2, 'Tags'),
+        (2, Tags, TagsInterface()),
     )
 
     @property
     def FINAL_ACTIONS(self):
         return (
-            (1, self.init, 'More results'),
+            (1, self.init_get_more_flow, 'More results'),
             (2, self.init_filter_flow, 'Search for different tags'),
             (3, self.init, 'Search for different topics')
         )
@@ -140,4 +148,10 @@ class TerminalUI:
 
     def _set_filters(self, filters):
         self.filters = filters
+        
+    def increment_pages(self):
+        self.topic_page += 1
+        
+    def reset_pages(self):
+        self.topic_page = 1
         
