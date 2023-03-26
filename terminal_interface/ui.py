@@ -7,6 +7,7 @@ from terminal_interface.posts import PostInterface
 from terminal_interface.tags import TagsInterface
 from utils import split_filters
 
+
 class TerminalUI:
     def __init__(self):
         self.final_action = 0
@@ -19,19 +20,19 @@ class TerminalUI:
         self._clear_console()
         self.reset_pages()
         topic = self._get_topic()
-        
+
         # handle invalid input
         if not self._is_valid_input(topic, self.TOPICS):
             self._send_invalid_message()
             sleep(2)
             return self.init()
-        
+
         self._set_topic(topic)   
         # handle exit case
         if self.topic == 0:
             self._clear_console()
             return
-                 
+
         self.init_filter_flow()
 
     def init_filter_flow(self):
@@ -43,7 +44,7 @@ class TerminalUI:
 
     def init_response_flow(self):
         _, topic_actions, topic_interface = self.selected_topic
-        
+
         actions = topic_actions()
         json_response = actions.get(filters=self.filters, page=self.topic_page)
         print(topic_interface.format_output(json_response))
@@ -51,25 +52,25 @@ class TerminalUI:
 
     def init_after_response_flow(self):
         final_action = self._get_final_action()
-        
+
         # handle invalid input
         if not self._is_valid_input(final_action, self.FINAL_ACTIONS):
             self._send_invalid_message()
             return self.init_after_response_flow()
-        
+
         self._set_final_action(final_action)   
         # handle exit case
         if self.final_action == 0:
             self._clear_console()
             return
-        
+
         _, action_method, __ = self.selected_final_action
         action_method()
 
     def init_get_more_flow(self):
         self.increment_pages()
         self.init_response_flow()
-        
+
     # validations
     def _is_valid_input(self, topic, property):
         try:
@@ -77,21 +78,20 @@ class TerminalUI:
 
             if topic == 0:
                 return True
-            
+
             for _topic in property:
                 if topic in _topic:
                     return True
-                
+
         except ValueError:
             return False
-        
+
     # messages
     def _send_invalid_message(self):
         print('The inserted value is invalid, please try again...\n')
 
     def _clear_console(self):
         os.system('cls' if os.name == 'nt' else 'clear')
-
 
     # props, sets, gets
     TOPICS = (
@@ -106,13 +106,13 @@ class TerminalUI:
             (2, self.init_filter_flow, 'Search for different tags'),
             (3, self.init, 'Search for different topics')
         )
-    
+
     @property
     def selected_topic(self):
         for topic in self.TOPICS:
             if self.topic in topic:
                 return topic
-            
+
     @property
     def selected_final_action(self):
         for final_action in self.FINAL_ACTIONS:
@@ -139,7 +139,7 @@ class TerminalUI:
 
     def _set_topic_page(self, topic_page):
         self.topic_page = topic_page
-        
+
     def _get_filters(self):
         _, __, topic_interface = self.selected_topic
 
@@ -148,10 +148,9 @@ class TerminalUI:
 
     def _set_filters(self, filters):
         self.filters = filters
-        
+
     def increment_pages(self):
         self.topic_page += 1
-        
+
     def reset_pages(self):
         self.topic_page = 1
-        

@@ -17,4 +17,3 @@ class TagsInterface:
             output = f'{output}\nID: {id}\nTag name: {name}\nResults: {count}\n'
 
         return output
-    

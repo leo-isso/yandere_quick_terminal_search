@@ -8,7 +8,7 @@ class BaseDomain:
     @property
     def ENTITY_URL(self):
         return NotImplementedError()
-    
+
     def _handle_params(self, filters, page):
         return NotImplementedError()
 

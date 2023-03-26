@@ -17,4 +17,3 @@ class PostInterface:
             output = f'{output}\nID: {id}\nFile URL: {file_url}\nTags: {tags}\n'
 
         return output
-    
