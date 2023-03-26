@@ -1,2 +1,2 @@
-def split_tags(tags):
-    return tags.split(' ')
+def split_filters(filters):
+    return filters.split(' ')

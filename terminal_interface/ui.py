@@ -3,12 +3,13 @@ from time import sleep
 
 from domains.posts import Posts
 from terminal_interface.posts import PostInterface
+from utils import split_filters
 
 class TerminalUI:
     def __init__(self):
         self.final_action = 0
         self.topic = 0
-        self.tags = ''
+        self.filters = ''
         self.topic_page = 1
 
     # flows
@@ -28,19 +29,19 @@ class TerminalUI:
             self._clear_console()
             return
                  
-        self.init_tags_flow()
+        self.init_filter_flow()
 
-    def init_tags_flow(self):
+    def init_filter_flow(self):
         self._clear_console()
-        tags = self._get_tags()
-        self._set_tags(tags)
+        filter = split_filters(self._get_filters())
+        self._set_filters(filter)
         self.init_response_flow()
 
     def init_response_flow(self):
         _, topic_actions, topic_interface = self.selected_topic
         
-        actions = topic_actions(self.tags)
-        json_response = actions.get()
+        actions = topic_actions()
+        json_response = actions.get(filter=self.filters, page=self.topic_page)
         print(topic_interface.format_output(json_response))
         self.init_after_response_flow()
 
@@ -94,7 +95,7 @@ class TerminalUI:
     def FINAL_ACTIONS(self):
         return (
             (1, self.init, 'More results'),
-            (2, self.init_tags_flow, 'Search for different tags'),
+            (2, self.init_filter_flow, 'Search for different tags'),
             (3, self.init, 'Search for different topics')
         )
     
@@ -131,12 +132,12 @@ class TerminalUI:
     def _set_topic_page(self, topic_page):
         self.topic_page = topic_page
         
-    def _get_tags(self):
+    def _get_filters(self):
         _, __, topic_interface = self.selected_topic
 
         print(topic_interface.selection_message)
         return input(topic_interface.input_message).strip()
 
-    def _set_tags(self, tags):
-        self.tags = tags
+    def _set_filters(self, filters):
+        self.filters = filters
         
