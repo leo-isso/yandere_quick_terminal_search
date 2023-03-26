@@ -7,9 +7,12 @@ class BaseDomain:
     @property
     def ENTITY_URL(self):
         return NotImplementedError()
+    
+    def handle_params():
+        return NotImplementedError()
 
-    def get(self, **kwargs):
-        params = dict(**kwargs)
+    def get(self, filter, page):
+        params = self.handle_params(filter, page)
 
         request = self.requests.get(
             url=self.ENTITY_URL,
