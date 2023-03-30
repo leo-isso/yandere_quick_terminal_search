@@ -5,7 +5,6 @@ from domains.posts import Posts
 from domains.tags import Tags
 from terminal_interface.posts import PostInterface
 from terminal_interface.tags import TagsInterface
-from utils import split_filters
 
 
 class TerminalUI:
@@ -38,7 +37,7 @@ class TerminalUI:
     def init_filter_flow(self):
         self._clear_console()
         self.reset_pages()
-        filters = split_filters(self._get_filters())
+        filters = self._get_filters()
         self._set_filters(filters)
         self.init_response_flow()
 
