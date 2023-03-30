@@ -120,7 +120,8 @@ class TerminalUI:
 
     def _get_topic(self):
         topics = ''.join(
-            [f'\n{index} - {interface.domain_name}' for index, _, interface in self.TOPICS]
+            [f'\n{index} - {interface.domain_name}'
+                for index, _, interface in self.TOPICS]
         )
         return input(f'Select a topic:\n0 - Exit{topics}\n\n>')
 
